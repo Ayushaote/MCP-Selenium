@@ -23,7 +23,7 @@ pipeline {
                 steps {
                     dir('MCP_Reports_Pro') {
                                            publishHTML([
-                            reportDir: 'target',
+                            reportDir: 'Report',
                             reportFiles: 'ExtentReport.html',
                             reportName: 'Test Report'
                         ])
