@@ -1,33 +1,34 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Ayushaote/MCP-Selenium.git'
+        agent any
+    
+        stages {
+    
+            stage('Build') {
+                steps {
+                    dir('MCP_Reports_Pro') {
+                        bat 'mvn clean compile'
+                    }
+                }
             }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'mvn clean compile'
+    
+            stage('Test') {
+                steps {
+                    dir('MCP_Reports_Pro') {
+                        bat 'mvn test'
+                    }
+                }
             }
-        }
-
-        stage('Test') {
-            steps {
-                bat 'mvn test'
-            }
-        }
-
-        stage('Report') {
-            steps {
-                publishHTML([
-                    reportDir: 'reports',
-                    reportFiles: 'extent-report.html',
-                    reportName: 'Test Report'
-                ])
+    
+            stage('Report') {
+                steps {
+                    dir('MCP_Reports_Pro') {
+                                           publishHTML([
+                            reportDir: 'target',
+                            reportFiles: 'ExtentReport.html',
+                            reportName: 'Test Report'
+                        ])
+                    }
+                }
             }
         }
     }
-}
