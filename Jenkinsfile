@@ -21,9 +21,9 @@ pipeline {
     
             stage('Report') {
                 steps {
-                    dir('MCP_Reports_Pro') {
+                    dir('Report') {
                                            publishHTML([
-                            reportDir: 'Report',
+                            reportDir: 'Report_dir',
                             reportFiles: 'ExtentReport.html',
                             reportName: 'Test Report'
                         ])
